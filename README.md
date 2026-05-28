@@ -1,5 +1,7 @@
 # hyprgrid
 
+[![Build](https://github.com/lostf1sh/hyprgrid/actions/workflows/build.yml/badge.svg)](https://github.com/lostf1sh/hyprgrid/actions/workflows/build.yml)
+
 Experimental Hyprland plugin for treating numeric workspaces as a fixed 10x10 grid.
 
 The plugin registers Lua callbacks under `hl.plugin.grid` and maps grid coordinates to workspace IDs:
@@ -27,7 +29,22 @@ Alpha / personal-use ready. Hyprland plugins are ABI-sensitive, so rebuild this 
 - C++ compiler with C++23 support
 - Development packages used by Hyprland headers, including `pixman-1`, `libdrm`, `pangocairo`, `libinput`, `libudev`, `wayland-server`, `xkbcommon`, and Lua headers
 
-## Build
+## Install with hyprpm
+
+```sh
+hyprpm add https://github.com/lostf1sh/hyprgrid
+hyprpm enable hyprgrid
+hyprpm reload
+```
+
+After Hyprland updates, rebuild/update plugins:
+
+```sh
+hyprpm update
+hyprpm reload
+```
+
+## Manual build
 
 ```sh
 make
@@ -39,7 +56,7 @@ This creates:
 gridworkspace.so
 ```
 
-## Install
+## Manual install
 
 ```sh
 make install
@@ -83,6 +100,42 @@ hl.plugin.grid.row(2)
 hl.plugin.grid.col(5)
 hl.plugin.grid.col_rel(-1)
 hl.plugin.grid.move(4)
+```
+
+## Keybind examples
+
+These examples are for Hyprland's Lua config (`hyprland.lua`). Wrap plugin calls in functions so they run when the keybind is pressed, not while the config is loading.
+
+```lua
+local mainMod = "SUPER"
+
+-- SUPER + [1-0]: switch column in the current row.
+-- SUPER + SHIFT + [1-0]: move focused window to column in the current row.
+-- SUPER + CTRL + [1-0]: switch row while keeping the current column.
+for i = 1, 10 do
+    local key = i % 10 -- 10 maps to key 0
+
+    hl.bind(mainMod .. " + " .. key, function()
+        hl.plugin.grid.col(i)
+    end)
+
+    hl.bind(mainMod .. " + SHIFT + " .. key, function()
+        hl.plugin.grid.move(i)
+    end)
+
+    hl.bind(mainMod .. " + CTRL + " .. key, function()
+        hl.plugin.grid.row(i)
+    end)
+end
+
+-- Horizontal movement across columns.
+hl.bind(mainMod .. " + left", function()
+    hl.plugin.grid.col_rel(-1)
+end)
+
+hl.bind(mainMod .. " + right", function()
+    hl.plugin.grid.col_rel(1)
+end)
 ```
 
 ## Development

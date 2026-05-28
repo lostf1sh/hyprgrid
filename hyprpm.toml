@@ -1,0 +1,11 @@
+[repository]
+name = "hyprgrid"
+authors = ["lostf1sh"]
+
+[hyprgrid]
+description = "2D workspace grid for Hyprland numeric workspaces"
+authors = ["lostf1sh"]
+output = "gridworkspace.so"
+build = [
+    "make all",
+]
