@@ -1,0 +1,15 @@
+# Build outputs
+*.so
+*.o
+*.a
+*.d
+build/
+dist/
+compile_commands.json
+
+# Editor / OS noise
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
