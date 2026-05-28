@@ -138,6 +138,21 @@ hl.bind(mainMod .. " + right", function()
 end)
 ```
 
+## Roadmap / TODO
+
+Possible future improvements:
+
+- [ ] Add `row_rel(delta)` for vertical relative movement.
+- [ ] Add `goto(row, col)` for direct coordinate-based workspace switching.
+- [ ] Add `move_to(row, col)` for moving the focused window to an exact grid coordinate.
+- [ ] Add `move_row(row)` for moving the focused window to another row while keeping the current column.
+- [ ] Add optional wrap mode instead of clamping at grid edges.
+- [ ] Make grid dimensions configurable instead of hard-coded 10x10.
+- [ ] Make horizontal/vertical animation styles configurable.
+- [ ] Track grid state per monitor for better multi-monitor behavior.
+- [ ] Remember the last column per row.
+- [ ] Publish release artifacts tied to specific Hyprland ABI versions.
+
 ## Development
 
 ```sh
